@@ -2,13 +2,32 @@ from fastapi import FastAPI
 import requests
 import json
 import time
+import os
+from dotenv import load_dotenv
 
 app = FastAPI()
 
+# -------------------------
+# LOAD ENV
+# -------------------------
+
+load_dotenv()
+
 HF_KEYS = [
-"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",
-"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"
+os.getenv("HF_KEY_1"),
+os.getenv("HF_KEY_2"),
+os.getenv("HF_KEY_3"),
+os.getenv("HF_KEY_4"),
+os.getenv("HF_KEY_5"),
+os.getenv("HF_KEY_6"),
+os.getenv("HF_KEY_7"),
+os.getenv("HF_KEY_8"),
+os.getenv("HF_KEY_9"),
+os.getenv("HF_KEY_10")
 ]
+
+# remove empty keys
+HF_KEYS = [k for k in HF_KEYS if k]
 
 DEFAULT_MODEL = "google/gemma-3-4b-it"
 
