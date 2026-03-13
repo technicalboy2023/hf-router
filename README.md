@@ -1,77 +1,75 @@
 HuggingFace Chat Router
 
-OpenAI-compatible router for HuggingFace models.
+OpenAI-compatible router for HuggingFace chat models.
+
+Supports models like:
+
+- Llama
+- Gemma
+- Mistral
+- Zephyr
+- Mixtral
+
+---
 
 Features
 
 - Multiple HF API keys
 - Round-robin key rotation
-- OpenAI compatible API
-- n8n integration
+- OpenAI compatible chat API
 - Model listing
-- Health endpoint
+- n8n integration
+- systemd auto start
 
 ---
 
 Installation
 
-git clone https://github.com/technicalboy2023/hf-router.git
-cd hf-router
+cd /home/aman
+mkdir -p routers
+cd routers
 
-python3 -m venv venv
-source venv/bin/activate
-pip install fastapi uvicorn requests python-dotenv
+curl -O https://raw.githubusercontent.com/technicalboy2023/hf-router/main/install-router.sh
+chmod +x install-router.sh
+
+bash install-router.sh hf-router 9000
 
 ---
 
-Environment Variables
+Configure API Keys
 
-Create ".env":
+nano /home/aman/routers/hf-router/.env
 
-HF_KEY_1=hf_xxxxxxxxx
-HF_KEY_2=hf_xxxxxxxxx
+Example:
+
+HF_KEY_1=hf_xxxxx
+HF_KEY_2=hf_xxxxx
 HF_KEY_3=
-HF_KEY_4=
-HF_KEY_5=
+
+Restart router:
+
+sudo systemctl restart hf-router
 
 ---
 
-Run
-
-uvicorn router:app --host 0.0.0.0 --port 9100
-
----
-
-API
-
-Chat
+Chat Endpoint
 
 POST /v1/chat/completions
 
 Example:
 
-{
+curl http://localhost:9000/v1/chat/completions \
+-H "Content-Type: application/json" \
+-d '{
 "model":"meta-llama/Llama-3.1-8B-Instruct",
 "messages":[{"role":"user","content":"hello"}]
-}
+}'
 
 ---
 
-Models
-
-GET /v1/models
-
----
-
-Health
+Health Check
 
 GET /health
-
----
-
-n8n Setup
-
-Base URL: http://VPS_IP:9100/v1
 
 ---
 
