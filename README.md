@@ -30,7 +30,10 @@ mkdir -p routers
 cd routers
 
 curl -O https://raw.githubusercontent.com/technicalboy2023/hf-router/main/install-router.sh
+
 chmod +x install-router.sh
+
+sed -i 's/\r$//' install-router.sh
 
 bash install-router.sh hf-router 9000
 
